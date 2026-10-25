@@ -1,0 +1,119 @@
+services:
+  redirects:
+    image: traefik/whoami:v1.12.0
+    container_name: redirects
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "64M"
+          pids: 32
+        reservations:
+          memory: "32M"
+    labels:
+      - traefik.enable=true
+
+      - traefik.http.routers.www-ieee.rule=Host(`www.ieeeihuserres.org`)
+      - traefik.http.routers.www-ieee.entrypoints=websecure
+      - traefik.http.routers.www-ieee.middlewares=www-ieee-redirect
+      - traefik.http.routers.www-ieee.service=noop@internal
+      - traefik.http.middlewares.www-ieee-redirect.redirectregex.regex=^https?://www\.ieeeihuserres\.org/(.*)
+      - traefik.http.middlewares.www-ieee-redirect.redirectregex.replacement=https://ieeeihuserres.org/$${1}
+      - traefik.http.middlewares.www-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.cs-ieee.rule=Host(`cs.ieeeihuserres.org`)
+      - traefik.http.routers.cs-ieee.entrypoints=websecure
+      - traefik.http.routers.cs-ieee.middlewares=cs-ieee-redirect
+      - traefik.http.routers.cs-ieee.service=noop@internal
+      - traefik.http.middlewares.cs-ieee-redirect.redirectregex.regex=^https?://cs\.ieeeihuserres\.org/(.*)
+      - traefik.http.middlewares.cs-ieee-redirect.redirectregex.replacement=https://ieeeihuserres.org/$${1}
+      - traefik.http.middlewares.cs-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.tv-ieee.rule=Host(`tv.ieeeihuserres.org`)
+      - traefik.http.routers.tv-ieee.entrypoints=websecure
+      - traefik.http.routers.tv-ieee.middlewares=tv-ieee-redirect
+      - traefik.http.routers.tv-ieee.service=noop@internal
+      - traefik.http.middlewares.tv-ieee-redirect.redirectregex.regex=.*
+      - traefik.http.middlewares.tv-ieee-redirect.redirectregex.replacement=https://www.youtube.com/channel/UCL5HBLikQJIAoKiyew8qx9Q
+      - traefik.http.middlewares.tv-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.hermes-ieee.rule=Host(`hermes.ieeeihuserres.org`)
+      - traefik.http.routers.hermes-ieee.entrypoints=websecure
+      - traefik.http.routers.hermes-ieee.middlewares=hermes-ieee-redirect
+      - traefik.http.routers.hermes-ieee.service=noop@internal
+      - traefik.http.middlewares.hermes-ieee-redirect.redirectregex.regex=.*
+      - traefik.http.middlewares.hermes-ieee-redirect.redirectregex.replacement=https://hermesteam.eu
+      - traefik.http.middlewares.hermes-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.wei4h-ieee.rule=Host(`wei4h.ieeeihuserres.org`)
+      - traefik.http.routers.wei4h-ieee.entrypoints=websecure
+      - traefik.http.routers.wei4h-ieee.middlewares=wei4h-ieee-redirect
+      - traefik.http.routers.wei4h-ieee.service=noop@internal
+      - traefik.http.middlewares.wei4h-ieee-redirect.redirectregex.regex=.*
+      - traefik.http.middlewares.wei4h-ieee-redirect.redirectregex.replacement=https://attend.ieee.org/weih-2021/
+      - traefik.http.middlewares.wei4h-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.wei4h-ondemand-ieee.rule=Host(`wei4h-ondemand.ieeeihuserres.org`)
+      - traefik.http.routers.wei4h-ondemand-ieee.entrypoints=websecure
+      - traefik.http.routers.wei4h-ondemand-ieee.middlewares=wei4h-ondemand-ieee-redirect
+      - traefik.http.routers.wei4h-ondemand-ieee.service=noop@internal
+      - traefik.http.routers.wei4h-on-demand-ieee.rule=Host(`wei4h-ondemand.ieeeihuserres.org`)
+      - traefik.http.routers.wei4h-on-demand-ieee.entrypoints=websecure
+      - traefik.http.routers.wei4h-on-demand-ieee.middlewares=wei4h-ondemand-ieee-redirect
+      - traefik.http.routers.wei4h-on-demand-ieee.service=noop@internal
+      - traefik.http.middlewares.wei4h-ondemand-ieee-redirect.redirectregex.regex=.*
+      - traefik.http.middlewares.wei4h-ondemand-ieee-redirect.redirectregex.replacement=https://www.youtube.com/channel/UC4tbvk6PDCwsmxPZWCgriAA/featured
+      - traefik.http.middlewares.wei4h-ondemand-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.siot4es2022-ieee.rule=Host(`siot4es2022.ieeeihuserres.org`)
+      - traefik.http.routers.siot4es2022-ieee.entrypoints=websecure
+      - traefik.http.routers.siot4es2022-ieee.middlewares=siot4es2022-ieee-redirect
+      - traefik.http.routers.siot4es2022-ieee.service=noop@internal
+      - traefik.http.middlewares.siot4es2022-ieee-redirect.redirectregex.regex=^https?://siot4es2022\.ieeeihuserres\.org/(.*)
+      - traefik.http.middlewares.siot4es2022-ieee-redirect.redirectregex.replacement=https://siot4es.ieeeihuserres.org/$${1}
+      - traefik.http.middlewares.siot4es2022-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.weiot-ieee.rule=Host(`weiot.ieeeihuserres.org`)
+      - traefik.http.routers.weiot-ieee.entrypoints=websecure
+      - traefik.http.routers.weiot-ieee.middlewares=weiot-ieee-redirect
+      - traefik.http.routers.weiot-ieee.service=noop@internal
+      - traefik.http.middlewares.weiot-ieee-redirect.redirectregex.regex=^https?://weiot\.ieeeihuserres\.org/(.*)
+      - traefik.http.middlewares.weiot-ieee-redirect.redirectregex.replacement=https://siot4es.ieeeihuserres.org/$${1}
+      - traefik.http.middlewares.weiot-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.git-ieee.rule=Host(`git.ieeeihuserres.org`)
+      - traefik.http.routers.git-ieee.entrypoints=websecure
+      - traefik.http.routers.git-ieee.middlewares=git-ieee-redirect
+      - traefik.http.routers.git-ieee.service=noop@internal
+      - traefik.http.middlewares.git-ieee-redirect.redirectregex.regex=^https?://git\.ieeeihuserres\.org/(.*)
+      - traefik.http.middlewares.git-ieee-redirect.redirectregex.replacement=https://github.com/IEEEIHUSerres
+      - traefik.http.middlewares.git-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.ecescon15-ieee.rule=Host(`ecescon15.ieeeihuserres.org`)
+      - traefik.http.routers.ecescon15-ieee.entrypoints=websecure
+      - traefik.http.routers.ecescon15-ieee.middlewares=ecescon15-ieee-redirect
+      - traefik.http.routers.ecescon15-ieee.service=noop@internal
+      - traefik.http.middlewares.ecescon15-ieee-redirect.redirectregex.regex=^https?://ecescon15\.ieeeihuserres\.org/(.*)
+      - traefik.http.middlewares.ecescon15-ieee-redirect.redirectregex.replacement=https://github.com/IEEEIHUSerres/ECESCON-15-HC-05-Workshop
+      - traefik.http.middlewares.ecescon15-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.discord-ieee.rule=Host(`discord.ieeeihuserres.org`)
+      - traefik.http.routers.discord-ieee.entrypoints=websecure
+      - traefik.http.routers.discord-ieee.middlewares=discord-ieee-redirect
+      - traefik.http.routers.discord-ieee.service=noop@internal
+      - traefik.http.middlewares.discord-ieee-redirect.redirectregex.regex=^https?://discord\.ieeeihuserres\.org/(.*)
+      - traefik.http.middlewares.discord-ieee-redirect.redirectregex.replacement=https://discord.gg/X5HggGmcC
+      - traefik.http.middlewares.discord-ieee-redirect.redirectregex.permanent=true
+
+      - traefik.http.routers.milestones-ieee.rule=Host(`milestones.ieeeihuserres.org`)
+      - traefik.http.routers.milestones-ieee.entrypoints=websecure
+      - traefik.http.routers.milestones-ieee.middlewares=milestones-ieee-redirect
+      - traefik.http.routers.milestones-ieee.service=noop@internal
+      - traefik.http.middlewares.milestones-ieee-redirect.redirectregex.regex=^https?://milestones\.ieeeihuserres\.org/(.*)
+      - traefik.http.middlewares.milestones-ieee-redirect.redirectregex.replacement=https://summary.ieeeihuserres.org
+      - traefik.http.middlewares.milestones-ieee-redirect.redirectregex.permanent=true
+
+networks:
+  default:
+    name: redirects
